@@ -1,0 +1,6 @@
+homepage: "https://www.markus-baersch.de"
+documentation: "https://github.com/mbaersch/microsoft-consent-mode-tag/#readme"
+versions:
+  # Latest version
+  - sha: 1fd2a22adb7b5811e17e1df6d1da5ed8e60ee9c7
+    changeNotes: Initial release.
