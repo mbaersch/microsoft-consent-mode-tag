@@ -20,7 +20,7 @@ ___INFO___
   "brand": {
     "id": "mbaersch",
     "displayName": "",
-    "thumbnail": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAADC0lEQVR42mP8dWD932unGYgCjGwhWS/ZX555MoM49QxKQs4sQNN/71pBnPmMrO6RH/49OPt0FpEWsDJzMxGplGxAcwtY4CzO5qXfa6PhXPbUht/bl/x7cgfIYJJThTpHUoH/14944/3IRlx4tuDi84WELWDRsUDxmpwqI78QwxMQ48/Rbf8e3wZGAntW61fW10cedgAVJJocmH/GAcj48P0BUT7AA4Cm/716ChjJDD++/WH+/vD9QYg4nEGpBUyykCBiZGBhJT8O8ABWz5j/n96BbODgZvhPAwt+zqqHBBFXz0YGbtIsQCTTf6+eMKnoQtiMfEJMMipAEVIDBJ8Pfi7s4Kye82f/uv8/v7M6Bf85tv3/62fQIHIKZganMUYBUYbft8i0AGji39sXWZ1CgOzv3Tn/7lyGiP/et5ZJTAZT5/67DaRZAARAJ/9aOQlNBdBPUBYjI4uZCzwODt5rJMYCkooKRpICB6rn76sn/z+9J1I1k4zyD6Yf77/fI1I9N5sYy2MuyTdM4kRq0GRm5vr/g5MUH7C0Xfkx684vopzPwHDGk8fw9wGGi0HEGi9XSGpxTXI0DJoKx0uKZZMDtwovEwOPNgOHPEjIZD+D3ip0dRpTGAy3kGzBFBPOLkPO6bd+vvj+j+H/Xwa1bpCokAMDvykDnylCHdBiUW8QIskCeW7GUHlWxz1ftj/78+UPA8PXGwyXwqByj6YyyGYhlCo3MGBkb8IWhMqxLbz36/VPbMX0s4UM0gnQEGMVBXno9TaSLeBmYfj6B0cl8Ps1w9MFDFIJILZUPMPH0yARUi34+odBAU/r5kE3yBNAIJfNgK34I2zB6ke/vKRZgTGBEAKGBsL+awx/v4KS069XDD8ekmPBw6//c05/P+XB22HIIcHByCBkz6AzH90TEqEMj6dh1U5UMl396LfZjs/fIDHx5QbDeR8Q4w4sQIARC2Q/gzWN4OLEWwDxR9Plny9+/Gf49RIqBK8PgBGLXDeg1hO0bzoGybKCCgAiADCWpbgYGf5qM6h1EWs8nzEA48MRtfTMbBAAAAAASUVORK5CYII\u003d"
+    "thumbnail": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAB9ElEQVR42mP8//8/Ay0BE01NH7WABAvev/9JIwtYINTMmTclJbni41XgEgsX3jl9+s2UKRZA9rZtT7q7ryBrmzrVYtq0G1evfkAzLiFBBdkQhAWPH3/7+fMfssSDB1/g+oE2vX79c+pUc7isqCiHqakIkASyFyy4o6DA4+AgAWQDGdh9QBCIirLb20sgi8BdeuDAC6Dp9fUG+OKAdoBYHwBDrLHxAoQNdC+ab/CAQeMDYOzhCmWifMDBwQwMBLQw4eYm1nrCFtjbi2/b9vTaNWi6BDKA3NBQBfIMXbFiRXV1NUoQ+fnJtbZe1tbe6OAgzgBKeS9DQ+WRs8y1ax8dHXfAucCMpqUlgGn027dvo6OjgYylS5dCRBiR6wNgjgXmKSAD6HZk/a9f/4B7DgKAspBcBvEuMDDl5XkuXrwYHBzs5uY2bdo0hNL/VAJbt24VFBTMzMxEE6eOBcuXLwe61cTE5M2bN9S3AGK6srIypulUsODCBVD2BgYOkIFVAUUWAA0FGg20AOgJXGpIsGDGjBlA4+ABDSSBbKDp4eHheHQRawHQOGAKgSQ8SFKpqqrCE/RkBhHQsRA7IBELBMDUiV8LaRbcvXsXObu5u7sT1EJyJMMDCgiA9lHfArgngHFOjHpykinQE7hSPSZAKexoAYZ+0xEA/YWJATjOiCUAAAAASUVORK5CYII\u003d"
   },
   "description": "",
   "containerContexts": [
@@ -35,7 +35,7 @@ ___TEMPLATE_PARAMETERS___
   {
     "type": "SELECT",
     "name": "cmType",
-    "displayName": "Consent Mode Settings Type",
+    "displayName": "Consent command",
     "macrosInSelect": true,
     "selectItems": [
       {
@@ -49,12 +49,33 @@ ___TEMPLATE_PARAMETERS___
     ],
     "simpleValueType": true,
     "defaultValue": "default",
-    "alwaysInSummary": false
+    "alwaysInSummary": true,
+    "help": "Define the type of \"consent\" command to use. Find details about UET consent mode here: https://help.ads.microsoft.com/apex/index/3/en/60119"
+  },
+  {
+    "type": "TEXT",
+    "name": "waitForUpdate",
+    "displayName": "Wait for Update",
+    "simpleValueType": true,
+    "defaultValue": 0,
+    "valueValidators": [
+      {
+        "type": "NON_NEGATIVE_NUMBER"
+      }
+    ],
+    "enablingConditions": [
+      {
+        "paramName": "cmType",
+        "paramValue": "default",
+        "type": "EQUALS"
+      }
+    ],
+    "help": "Optionally define a timespan in milliseconds how long UET tags should wait for an \"Update\" command."
   },
   {
     "type": "SELECT",
     "name": "cmState",
-    "displayName": "Ad Storage Status",
+    "displayName": "ad_storage status",
     "macrosInSelect": true,
     "selectItems": [
       {
@@ -72,14 +93,34 @@ ___TEMPLATE_PARAMETERS___
         "type": "NON_EMPTY"
       }
     ],
-    "alwaysInSummary": false
+    "alwaysInSummary": true
+  },
+  {
+    "type": "CHECKBOX",
+    "name": "enableTcf",
+    "checkboxText": "Enable TCF",
+    "simpleValueType": true,
+    "alwaysInSummary": true,
+    "help": "Check this option to configure UET to use the TCF v2.0 string to control tag behaviour. For details see https://help.ads.microsoft.com/?ocid\u003d#apex/ads/en/60186/2"
   }
 ]
 
 
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
-require('createQueue')('uetq')('consent', data.cmType||'default', {'ad_storage': data.cmState||'denied'});
+const createQueue = require('createQueue');
+const makeNumber = require('makeNumber');
+const uetq = createQueue('uetq');
+
+let cmSettings = {'ad_storage': data.cmState||'denied'};
+if (data.cmType === 'default' && data.waitForUpdate > 0)
+  cmSettings.wait_for_update = makeNumber(data.waitForUpdate);
+uetq('consent', data.cmType||'default', cmSettings);
+
+if (data.enableTcf === true) 
+  uetq('config', 'tcf', { 'enabled' : true });
+
+
 data.gtmOnSuccess();
 
 

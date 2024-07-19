@@ -7,9 +7,14 @@
 ---
 
 ## Usage
-Install the tag template and add a new *Microsoft UET Consent Mode* tag. Pick "default" or "update" as type of push you want to execute and pick either *denied* or *granted* (or use a variable that holds one of those values) for the `ad_storage` setting. When fired, the tag pushes the configured setting to the `uetq` queue of the UET tag that then can pick up that setting and add a signal to all outgoing requests. 
+Install the tag template and add a new *Microsoft UET Consent Mode* tag. Pick "default" or "update" as type of push you want to execute and pick either *denied* or *granted* (or use a variable that holds one of those values) for the `ad_storage` setting. When fired, the tag pushes the configured setting to the `uetq` queue of the UET tag that then can pick up that setting and add a signal to all outgoing requests.
 
-Find more information about setting up UET for consent mode [in this help article](https://help.ads.microsoft.com/apex/index/3/en/60119).
+### Wait for Update
+Even if this option is not documented [in this help article about UET consent mode](https://help.ads.microsoft.com/apex/index/3/en/60119), it seems to work just like expected from using Google Consent Mode. 
+
+### Enable TCF
+If you use a TCF v2.0 compatible consent platform on you website and want to instruct UET to respect settings from the TCF v2.0 string, check this option. More about this integration and how UET handles purpose settings can be found [in this help article](https://help.ads.microsoft.com/?ocid=#apex/ads/en/60186/2). 
+
 
 ### Check if it works
 After installing ad configuring, fire this tag and a UET tag (you can use the  Consent Mode tag as set-up tag for the UET using tag sequencing) and watch for a `asc` parameter (either using the network tab of your browser´s developer tools or by inspecting the parameters with the UET Tag Helper extension in Chrome). If consent was granted, the value should be *G*, otherwise *D*. If you do not find the `asc` parameter, something is wrong. Check the order in which tags are fired and make sure, that the *Microsoft UET Consent Mode" tag fires directly before or after the UET tag. 
