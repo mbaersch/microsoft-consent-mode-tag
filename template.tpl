@@ -102,6 +102,14 @@ ___TEMPLATE_PARAMETERS___
     "simpleValueType": true,
     "alwaysInSummary": true,
     "help": "Check this option to configure UET to use the TCF v2.0 string to control tag behaviour. For details see https://help.ads.microsoft.com/?ocid\u003d#apex/ads/en/60186/2"
+  },
+  {
+    "type": "CHECKBOX",
+    "name": "pushEvent",
+    "checkboxText": "Push event to dataLayer when done",
+    "simpleValueType": true,
+    "alwaysInSummary": true,
+    "help": "Check this to receive a dataLayer event when consent command got sent to UET. The event name will be \"uet_consent_default\" or \"uet_consent_update\". The key \"uet_consent_settings\" will contain UET settings that were set with that command."
   }
 ]
 
@@ -120,6 +128,11 @@ uetq('consent', data.cmType||'default', cmSettings);
 if (data.enableTcf === true) 
   uetq('config', 'tcf', { 'enabled' : true });
 
+if (data.pushEvent) 
+  createQueue('dataLayer')({
+    'event': 'uet_consent_' + data.cmType,
+    'uet_consent_settings' : cmSettings
+  }); 
 
 data.gtmOnSuccess();
 
@@ -163,6 +176,45 @@ ___WEB_PERMISSIONS___
                   {
                     "type": 1,
                     "string": "uetq"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "dataLayer"
                   },
                   {
                     "type": 8,
