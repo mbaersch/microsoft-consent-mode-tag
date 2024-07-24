@@ -93,7 +93,8 @@ ___TEMPLATE_PARAMETERS___
         "type": "NON_EMPTY"
       }
     ],
-    "alwaysInSummary": true
+    "alwaysInSummary": true,
+    "help": "If you use a variable to set the value, make sure to use \"granted\" or \"true\" as value (case-insensitive) for \"granted\" status. Everything else will result in \"denied\""
   },
   {
     "type": "CHECKBOX",
@@ -102,6 +103,14 @@ ___TEMPLATE_PARAMETERS___
     "simpleValueType": true,
     "alwaysInSummary": true,
     "help": "Check this option to configure UET to use the TCF v2.0 string to control tag behaviour. For details see https://help.ads.microsoft.com/?ocid\u003d#apex/ads/en/60186/2"
+  },
+  {
+    "type": "CHECKBOX",
+    "name": "cnfClarity",
+    "checkboxText": "Set Clarity cookie consent",
+    "simpleValueType": true,
+    "alwaysInSummary": true,
+    "help": "Check to instruct Clarity to use cookies if status is set to \"granted\" or erase cookies otherwise"
   },
   {
     "type": "CHECKBOX",
@@ -120,7 +129,10 @@ const createQueue = require('createQueue');
 const makeNumber = require('makeNumber');
 const uetq = createQueue('uetq');
 
-let cmSettings = {'ad_storage': data.cmState||'denied'};
+let cmVal = (data.cmState||"denied").toLowerCase(), 
+    cmStatus = (cmVal == "granted" || cmVal == "true") ? "granted" : "denied";
+
+let cmSettings = {'ad_storage': cmStatus};
 if (data.cmType === 'default' && data.waitForUpdate > 0)
   cmSettings.wait_for_update = makeNumber(data.waitForUpdate);
 uetq('consent', data.cmType||'default', cmSettings);
@@ -133,6 +145,14 @@ if (data.pushEvent)
     'event': 'uet_consent_' + data.cmType,
     'uet_consent_settings' : cmSettings
   }); 
+
+if (data.cnfClarity === true) {
+  const callInWindow = require('callInWindow');
+  if (cmStatus === 'granted') 
+    callInWindow('clarity', 'consent');
+  else 
+    callInWindow('clarity', 'consent', false);
+}
 
 data.gtmOnSuccess();
 
@@ -227,6 +247,45 @@ ___WEB_PERMISSIONS___
                   {
                     "type": 8,
                     "boolean": false
+                  }
+                ]
+              },
+              {
+                "type": 3,
+                "mapKey": [
+                  {
+                    "type": 1,
+                    "string": "key"
+                  },
+                  {
+                    "type": 1,
+                    "string": "read"
+                  },
+                  {
+                    "type": 1,
+                    "string": "write"
+                  },
+                  {
+                    "type": 1,
+                    "string": "execute"
+                  }
+                ],
+                "mapValue": [
+                  {
+                    "type": 1,
+                    "string": "clarity"
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": false
+                  },
+                  {
+                    "type": 8,
+                    "boolean": true
                   }
                 ]
               }
