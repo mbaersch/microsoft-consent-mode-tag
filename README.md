@@ -19,7 +19,7 @@ Even if this option is not documented [in this help article about UET consent mo
 If you use a TCF v2.0 compatible consent platform on you website and want to instruct UET to respect settings from the TCF v2.0 string, check this option. More about this integration and how UET handles purpose settings can be found [in this help article](https://help.ads.microsoft.com/?ocid=#apex/ads/en/60186/2). 
 
 ### Set Clarity cookie consent
-Microsoft Clarity can be set up to run without cookies until consent was given ([Clarity help](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/arguments)). The tag can use the *ad_storage status* setting and instruct Clarity to either enable or deactivate (delete existing) Clarity cookies. If this option is checked, a value of *denied* for *ad_storage status* will call `window.clarity('consent', false)`, *granted* calls `window.clarity('consent')` after UET consent was set accordingly.     
+Microsoft Clarity can be set up to run without cookies until consent was given ([Clarity help](https://learn.microsoft.com/en-us/clarity/setup-and-installation/cookie-consent)). The tag can use the *ad_storage status* setting and instruct Clarity to either enable or deactivate (delete existing) Clarity cookies. If this option is checked, a value of *denied* for *ad_storage status* will call `window.clarity('consent', false)`, *granted* calls `window.clarity('consent')` after UET consent was set accordingly.     
 
 ### Push event
 The tag can push an event to the dataLayer when a consent command was sent. The event name will be `uet_consent_default` or `uet_consent_update`. Both dataLayer events contain a key `uet_consent_settings` with the configuration array that was sent with the UET consent command.   
