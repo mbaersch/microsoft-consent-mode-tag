@@ -2,8 +2,9 @@
 
 **Set or update Microsoft UET Consent Mode Settings (Custom Tag Template for Google Tag Manager)**
 
-[![Template Status](https://img.shields.io/badge/Community%20Template%20Gallery%20Status-submitted-orange)](https://tagmanager.google.com/gallery/#/owners/mbaersch/templates/microsoft-consent-mode-tag) ![Repo Size](https://img.shields.io/github/repo-size/mbaersch/microsoft-consent-mode-tag) ![License](https://img.shields.io/github/license/mbaersch/microsoft-consent-mode-tag)
     
+[![Template Status](https://img.shields.io/badge/Community%20Template%20Gallery%20Status-published-green)](https://tagmanager.google.com/gallery/#/owners/mbaersch/templates/microsoft-consent-mode-tag) ![Repo Size](https://img.shields.io/github/repo-size/mbaersch/microsoft-consent-mode-tag) ![License](https://img.shields.io/github/license/mbaersch/microsoft-consent-mode-tag)
+
 ---
 
 ## Usage
