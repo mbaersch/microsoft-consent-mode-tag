@@ -126,15 +126,14 @@ ___TEMPLATE_PARAMETERS___
 ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 const createQueue = require('createQueue');
-const makeNumber = require('makeNumber');
 const uetq = createQueue('uetq');
 
-let cmVal = (data.cmState||"denied").toLowerCase(), 
+let cmVal = require('makeString')(data.cmState||"denied").toLowerCase(), 
     cmStatus = (cmVal == "granted" || cmVal == "true") ? "granted" : "denied";
 
 let cmSettings = {'ad_storage': cmStatus};
 if (data.cmType === 'default' && data.waitForUpdate > 0)
-  cmSettings.wait_for_update = makeNumber(data.waitForUpdate);
+  cmSettings.wait_for_update = require('makeNumber')(data.waitForUpdate);
 uetq('consent', data.cmType||'default', cmSettings);
 
 if (data.enableTcf === true) 
