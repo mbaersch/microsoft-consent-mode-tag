@@ -2,9 +2,11 @@ homepage: "https://www.markus-baersch.de"
 documentation: "https://github.com/mbaersch/microsoft-consent-mode-tag/#readme"
 versions:
   # Latest version
+  - sha: 72a87c1f4056e17347f6e652c4a434f95da10927
+    changeNotes: update for Clarity consent v2. 
+  # Older versions
   - sha: d5eaf4d00b618f30b566af903b6df5d6f6fe69e4
     changeNotes: string value compatibility for settings 
-  # Older versions
   - sha: 971fd39df6c402f12f10a2018fd9ab8868791768   
     changeNotes: added Clarity cookie consent option.
   - sha: f8b4e65077c65f613899a8f1b61aa7d9b357a4d1
