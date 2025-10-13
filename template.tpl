@@ -75,7 +75,7 @@ ___TEMPLATE_PARAMETERS___
   {
     "type": "SELECT",
     "name": "cmState",
-    "displayName": "ad_storage status",
+    "displayName": "Ad storage status",
     "macrosInSelect": true,
     "selectItems": [
       {
@@ -95,6 +95,37 @@ ___TEMPLATE_PARAMETERS___
     ],
     "alwaysInSummary": true,
     "help": "If you use a variable to set the value, make sure to use \"granted\" or \"true\" as value (case-insensitive) for \"granted\" status. Everything else will result in \"denied\""
+  },
+  {
+    "type": "SELECT",
+    "name": "asState",
+    "displayName": "Analytics Storage status",
+    "macrosInSelect": true,
+    "selectItems": [
+      {
+        "value": "granted",
+        "displayValue": "granted"
+      },
+      {
+        "value": "denied",
+        "displayValue": "denied"
+      }
+    ],
+    "simpleValueType": true,
+    "valueValidators": [
+      {
+        "type": "NON_EMPTY"
+      }
+    ],
+    "alwaysInSummary": false,
+    "help": "Set status for analytics storage seperately (only for Clarity consent).",
+    "enablingConditions": [
+      {
+        "paramName": "cnfClarity",
+        "paramValue": true,
+        "type": "EQUALS"
+      }
+    ]
   },
   {
     "type": "CHECKBOX",
@@ -127,8 +158,9 @@ ___SANDBOXED_JS_FOR_WEB_TEMPLATE___
 
 const createQueue = require('createQueue');
 const uetq = createQueue('uetq');
+const makeString = require('makeString');
 
-let cmVal = require('makeString')(data.cmState||"denied").toLowerCase(), 
+let cmVal = makeString(data.cmState||"denied").toLowerCase(), 
     cmStatus = (cmVal == "granted" || cmVal == "true") ? "granted" : "denied";
 
 let cmSettings = {'ad_storage': cmStatus};
@@ -145,12 +177,13 @@ if (data.pushEvent)
     'uet_consent_settings' : cmSettings
   }); 
 
-if (data.cnfClarity === true) {
-  const callInWindow = require('callInWindow');
-  if (cmStatus === 'granted') 
-    callInWindow('clarity', 'consent');
-  else 
-    callInWindow('clarity', 'consent', false);
+if (data.cnfClarity === true) {  
+   let asVal = makeString(data.asState||"denied").toLowerCase(), 
+       asStatus = (asVal == "granted" || asVal == "true") ? "granted" : "denied";
+  require('callInWindow')('clarity', 
+                          'consentv2', 
+                          {ad_Storage: cmStatus, analytics_Storage: asStatus}
+                         );
 }
 
 data.gtmOnSuccess();
